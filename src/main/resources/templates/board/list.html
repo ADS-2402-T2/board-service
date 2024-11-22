@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 리스트</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- 필요 시 CSS 파일 링크 -->
+</head>
+<body>
+<h1>게시판 리스트</h1>
+
+<!-- 게시글 작성 버튼 -->
+<div>
+    <a th:href="@{/board/w}" class="btn btn-primary">글 작성하기</a>
+</div>
+
+<!-- 게시판 목록 테이블 -->
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성일</th>
+        <th>상세보기</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 게시판 데이터 반복 -->
+    <tr th:each="post : ${posts}">
+        <td th:text="${post.id}"></td>
+        <td th:text="${post.title}"></td>
+        <td th:text="${#dates.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td>
+            <a th:href="@{/board/r/{id}(id=${post.id})}">보기</a>
+        </td>
+    </tr>
+    <!-- 게시물이 없을 때 -->
+    <tr th:if="${#lists.isEmpty(posts)}">
+        <td colspan="6">게시물이 없습니다.</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
