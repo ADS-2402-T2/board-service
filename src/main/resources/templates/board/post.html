@@ -2,32 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 상세보기</title>
-    <link rel="stylesheet" href="/css/style.css"> <!-- 필요 시 CSS 파일 링크 -->
+    <title th:text="'게시글 상세보기 - ' + ${post.title}">게시글 상세보기</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"> <!-- CSS 파일 링크를 Thymeleaf 표현식으로 수정 -->
 </head>
 <body>
 <div class="container">
     <!-- 제목 -->
-    <h1 th:text="${post.title}" class="post-title"></h1>
+    <header class="post-header">
+        <h1 th:text="${post.title}" class="post-title">제목</h1>
+    </header>
 
     <!-- 게시글 정보 -->
-    <div class="post-info">
-        <p><strong>작성일:</strong> <span th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"></span></p>
-    </div>
+    <section class="post-info">
+        <p><strong>작성일:</strong>
+            <span th:text="${#temporals.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}">작성일</span>
+        </p>
+    </section>
 
     <!-- 게시글 내용 -->
-    <div class="post-content">
-        <p th:text="${post.text}"></p>
-    </div>
+    <section class="post-content">
+        <p th:text="${post.text}">내용</p>
+    </section>
 
     <!-- 버튼 섹션 -->
-    <div class="button-section">
+    <section class="button-section">
         <a th:href="@{/board/w/updateForm/{id}(id=${post.id})}" class="btn btn-primary">수정</a>
         <a th:href="@{/board/r}" class="btn btn-secondary">목록으로</a>
         <form th:action="@{/board/w/delete/{id}(id=${post.id})}" method="post" style="display: inline;">
             <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
         </form>
-    </div>
+    </section>
 </div>
 </body>
 </html>

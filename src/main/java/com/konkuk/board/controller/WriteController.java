@@ -1,5 +1,6 @@
 package com.konkuk.board.controller;
 
+import com.konkuk.board.dto.PostDto;
 import com.konkuk.board.entity.Post;
 import com.konkuk.board.service.WriteService;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +29,15 @@ public class WriteController {
                        Model model){
 
         Post post = new Post();
+
         post.setTitle(title);
         post.setText(text);
 
         writeService.save(post);
 
-        model.addAttribute("post", post);
+        PostDto postDto = post.toDto();
+
+        model.addAttribute("post", postDto);
 
         return "board/post";
     }

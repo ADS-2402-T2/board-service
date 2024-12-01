@@ -28,7 +28,7 @@
     <tr th:each="post : ${posts}">
         <td th:text="${post.id}"></td>
         <td th:text="${post.title}"></td>
-        <td th:text="${#dates.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${#temporals.format(post.createdDateTime, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
             <a th:href="@{/board/r/{id}(id=${post.id})}">보기</a>
         </td>
